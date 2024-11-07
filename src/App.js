@@ -11,7 +11,7 @@ function App() {
     <div>
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <a href="#home"><img src="/img/hao_logo1.png" style={{height:'10%',backgroundSize:'cover'}} alt="logo"/></a>
+          <a href="#home"><img src={process.env.PUBLIC_URL + "/img/hao_logo1.png"} style={{height:'70px',backgroundSize:'cover'}} alt="logo"/></a>
           <Nav className="me-auto">
             <Nav.Link href="#">Home</Nav.Link>
             <Nav.Link href="#">BestSeller</Nav.Link>
