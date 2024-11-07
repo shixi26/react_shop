@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import {Container,Nav,Navbar,Row,Col} from 'react-bootstrap';
 import './App.css';
+import data from './data.js' //data.js임시데이터
 
 function App() {
+
+  const [books] = useState(data)
+
   return (
     <div>
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <a href="#home"><img src="/img/hao_logo1.png" style={{height:'80px',backgroundSize:'cover'}} alt="logo"/></a>
+          <a href="#home"><img src="/img/hao_logo1.png" style={{height:'10%',backgroundSize:'cover'}} alt="logo"/></a>
           <Nav className="me-auto">
             <Nav.Link href="#">Home</Nav.Link>
             <Nav.Link href="#">BestSeller</Nav.Link>
@@ -16,27 +21,26 @@ function App() {
         </Container>
       </Navbar>
       <div className="main-bg"></div>
-      <Container>
-        <Row>
-          <Col>
-            <img src={process.env.PUBLIC_URL + "/img/book.PNG"} alt="" width={"90%"}/>
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>
-            <img src={process.env.PUBLIC_URL + "/img/book2.PNG"} alt="" width={"90%"}/>
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>            
-            <img src={process.env.PUBLIC_URL + "/img/book3.PNG"} alt=""width={"90%"}/>
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container>
+      <Content books={books}/>
     </div>
   );
+}
+
+function Content(props) {
+  return(
+    <Container>
+    <Row>
+      {props.books.map((book,i)=>(
+        <Col key={book?.id}>
+          <img src={process.env.PUBLIC_URL + "/img/book"+i+".PNG"} alt="" width={"90%"}/>
+          <h4>{book?.title}</h4>
+          <p>{book?.price}</p>
+        </Col>
+      ))}
+    </Row>
+  </Container>
+  )
+  
 }
 
 export default App;
