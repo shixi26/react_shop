@@ -39,5 +39,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://shixi26.github.io/react_shop/"
+  "homepage": "https://shixi26.github.io/react_shop/",
+  "devDependencies": {
+    "gh-pages": "^6.2.0"
+  }
 }
