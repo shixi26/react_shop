@@ -39,7 +39,7 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={
+        <Route path="/react_shop" element={
           <>
             <div className="main-bg"></div>
             <div>
