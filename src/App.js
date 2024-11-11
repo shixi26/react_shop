@@ -88,7 +88,7 @@ function Content(props) {
       {props.books.map((book,i)=>(
         <Col key={i}>
           <img src={process.env.PUBLIC_URL + `/img/book${book?.itemId}.PNG`} alt="" width={"90%"}/>
-          <h4><a href={`/detail/${book?.itemId}`}>{book?.title}</a></h4>
+          <h4><a href={`react_shop/detail/${book?.itemId}`}>{book?.title}</a></h4>
           <p>{book?.price}</p>
         </Col>
       ))}
