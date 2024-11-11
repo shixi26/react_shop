@@ -1,15 +1,26 @@
 import { useState } from 'react';
-import {Container,Nav,Navbar,Row,Col} from 'react-bootstrap';
-import './App.css';
+import {Container,Nav,Navbar,Row,Col,Button} from 'react-bootstrap';
+import './App.module.css';
 import data from './data.js' //data.js임시데이터
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail.js';
 
 function App() {
 
-  const [books] = useState(data)
+  const [books,setBooks] = useState(data)
 
   const navigate = useNavigate()
+  
+  //가나다순 정렬
+  const handleSort=()=>{
+    let copy = [...books]
+    copy.sort((a,b)=>{ //sort함수
+      if (a.title < b.title) return -1 // a가 b보다 작으면 a가 먼저 오도록
+      if (a.title > b.title) return 1 // a가 b보다 크면 b가 먼저 오도록
+      return 0 // a와 b가 같으면 순서 유지
+    })
+    setBooks(copy)
+  }
 
   return (
     <div>
@@ -32,11 +43,12 @@ function App() {
           <>
             <div className="main-bg"></div>
             <div>
+              <Button variant="primary" onClick={handleSort}>정렬</Button>
               <Content books={books}/>
             </div>
           </>
         }/>
-        <Route path="/detail" element={<Detail books={books}/>}/> 
+        <Route path="/detail/:id" element={<Detail books={books}/>}/> {/**url 파라미터 */}
         <Route path="*" element={<div>404</div>}/> 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>멤버</div>}/>
@@ -74,9 +86,9 @@ function Content(props) {
     <Container>
     <Row>
       {props.books.map((book,i)=>(
-        <Col key={book?.id}>
-          <img src={process.env.PUBLIC_URL + "/img/book"+i+".PNG"} alt="" width={"90%"}/>
-          <h4>{book?.title}</h4>
+        <Col key={i}>
+          <img src={process.env.PUBLIC_URL + `/img/book${book?.itemId}.PNG`} alt="" width={"90%"}/>
+          <h4><a href={`/detail/${book?.itemId}`}>{book?.title}</a></h4>
           <p>{book?.price}</p>
         </Col>
       ))}
