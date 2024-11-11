@@ -48,7 +48,7 @@ function App() {
             </div>
           </>
         }/>
-        <Route path="/detail/:id" element={<Detail books={books}/>}/> {/**url 파라미터 */}
+        <Route path="react_shop/detail/:id" element={<Detail books={books}/>}/> {/**url 파라미터 */}
         <Route path="*" element={<div>404</div>}/> 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>멤버</div>}/>
