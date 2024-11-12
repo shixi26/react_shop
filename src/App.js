@@ -4,6 +4,7 @@ import './App.module.css';
 import data from './data.js' //data.js임시데이터
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail.js';
+import axios from 'axios' //axios 추가
 
 function App() {
 
@@ -45,11 +46,21 @@ function App() {
             <div>
               <Button variant="primary" onClick={handleSort}>정렬</Button>
               <Content books={books}/>
+              <Button variant="primary" onClick={()=>{
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result)=>{
+                  const res = result.data
+                  const copy = [...books, ...res]             
+                  setBooks(copy)
+                })
+                .catch(()=>{
+                  console.log('실패')
+                })
+              }}>더보기</Button>
             </div>
           </>
         }/>
         <Route path="/react_shop/detail/:id" element={<Detail books={books}/>}/> {/**url 파라미터 */}
-        <Route path="*" element={<div>404</div>}/> 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>멤버</div>}/>
           <Route path="location" element={<About/>}/>
@@ -58,6 +69,7 @@ function App() {
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>}/>
           <Route path="two" element={<p>생일기념 쿠폰받기</p>}/>
         </Route>
+        <Route path="*" element={<div>404</div>}/> 
       </Routes>
     </div>
   );
@@ -87,8 +99,8 @@ function Content(props) {
     <Row>
       {props.books.map((book,i)=>(
         <Col key={i}>
-          <img src={process.env.PUBLIC_URL + `/img/book${book?.itemId}.PNG`} alt="" width={"90%"}/>
-          <h4><a href={`/react_shop/detail/${book?.itemId}`}>{book?.title}</a></h4>
+          <img src={process.env.PUBLIC_URL + `/img/book${book?.id}.PNG`} alt="" width={"90%"}/>
+          <h4><a href={`/react_shop/detail/${book?.id}`}>{book?.title}</a></h4>
           <p>{book?.price}</p>
         </Col>
       ))}
