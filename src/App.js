@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import {Container,Nav,Navbar,Row,Col,Button} from 'react-bootstrap';
+import {Spinner, Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import './App.module.css';
 import data from './data.js' //data.js임시데이터
-import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import Detail from './pages/Detail.js';
 import axios from 'axios' //axios 추가
 
 function App() {
 
-  const [books,setBooks] = useState(data)
+  const [books,setBooks] = useState(data) // 상품 state
+  const [clickCnt, setClickCnt] = useState(0) // 더보기 버튼 클릭 수 state
+  const [spin, setSpin] = useState(false) //로딩중ui state
 
   const navigate = useNavigate()
   
@@ -46,17 +48,25 @@ function App() {
             <div>
               <Button variant="primary" onClick={handleSort}>정렬</Button>
               <Content books={books}/>
+              {spin &&(<Spin/>)}
               <Button variant="primary" onClick={()=>{
-                axios.get('https://codingapple1.github.io/shop/data2.json')
+                //로딩ui
+                setSpin(true)
+                setClickCnt(clickCnt+1)
+                axios.get(`https://codingapple1.github.io/shop/data${clickCnt+2}.json`)
                 .then((result)=>{
                   const res = result.data
                   const copy = [...books, ...res]             
                   setBooks(copy)
+                  setSpin(false)
+                  //로딩ui 숨기기
                 })
                 .catch(()=>{
                   console.log('실패')
+                  setSpin(false)
+                  //로딩ui 숨기기
                 })
-              }}>더보기</Button>
+              }} disabled={clickCnt===2}>더보기</Button>
             </div>
           </>
         }/>
@@ -108,6 +118,14 @@ function Content(props) {
   </Container>
   )
   
+}
+
+function Spin(){
+  return(
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  )
 }
 
 export default App;
