@@ -17,26 +17,26 @@ function Detail(props) {
 		return x.id === Number(id)
 	})
 
-	useEffect(() => {
+	useEffect(() => {//화면로드시
 		//타이머
 		const timer = setTimeout(() => { setAlertVisible(false) }, 2000)
-		//화면로드시애니메이션
+		//애니메이션
 		const load = setTimeout(() => { setViewEffect('end') }, 200)
 		return () => {
 			clearTimeout(timer, load) //clean up function
 		}
 	}, [])
 
-	useEffect(() => {
+	useEffect(() => { //inputVal변할때마다
 		if (inputVal !== '' && /\d/.test(inputVal)) {
 			setInputAlert(true)
 		}
 	}, [inputVal])
 
 	return (
-		<div className={'container start ' + viewEffect} >
+		<div className={'container start ' + viewEffect}>
 			{goods != null && (
-				<div>
+				<div style={{ marginTop: '15px' }}>
 					<div className="row">
 						{alertVisible && (
 							<div className="alert alert-warning">
