@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { Spinner, Container, Nav, Navbar, Row, Col, Button } from 'react-bootstrap';
 import data from './data.js' //data.js임시데이터
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
@@ -6,11 +6,14 @@ import Detail from './pages/Detail.js';
 import axios from 'axios' //axios 추가
 import './App.css'
 
+export let Context1 = createContext()
+
 function App() {
 
 	const [books, setBooks] = useState(data) // 상품 state
 	const [clickCnt, setClickCnt] = useState(0) // 더보기 버튼 클릭 수 state
 	const [spin, setSpin] = useState(false) //로딩중ui state
+	const [stock, setStock] = useState([10, 11, 12]) //재고 상태
 
 	const navigate = useNavigate()
 
@@ -67,7 +70,7 @@ function App() {
 						</div>
 					</>
 				} />
-				<Route path="/react_shop/detail/:id" element={<Detail books={books} />} /> {/**url 파라미터 */}
+				<Route path="/react_shop/detail/:id" element={<Context1.Provider value={{ stock }}><Detail books={books} /></Context1.Provider>} /> {/**url 파라미터 */}
 				<Route path="/about" element={<About />}>
 					<Route path="member" element={<div>멤버</div>} />
 					<Route path="location" element={<About />} />
@@ -106,7 +109,7 @@ function Content(props) {
 			<Row>
 				{props.books.map((book, i) => (
 					<Col key={i}>
-						<img src={process.env.PUBLIC_URL + `/img/book${book?.id}.PNG`} alt="" width={"90%"} />
+						<a href={`/react_shop/detail/${book?.id}`}><img src={process.env.PUBLIC_URL + `/img/book${book?.id}.PNG`} alt="" width={"90%"} /></a>
 						<h4><a href={`/react_shop/detail/${book?.id}`}>{book?.title}</a></h4>
 						<p>{book?.price}</p>
 					</Col>
