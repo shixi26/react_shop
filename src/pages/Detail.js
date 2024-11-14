@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { InputGroup, Form, Nav } from 'react-bootstrap';
-import { Context1 } from './../App.js' //Context 추가
 
 function Detail(props) {
 
@@ -33,12 +32,8 @@ function Detail(props) {
 		}
 	}, [inputVal])
 
-	// state 보관함 해체해줌 object형식으로 들어옴
-	let { stock } = useContext(Context1)
-
 	return (
 		<div className={'container start ' + viewEffect}>
-			{stock[0]}
 			{goods != null && (
 				<div style={{ marginTop: '15px' }}>
 					<div className="row">
@@ -91,7 +86,6 @@ function Detail(props) {
 function TabContent({ tabVisible }) {
 
 	const [fade, setFade] = useState('') //탭애니메이션
-	let { stock } = useContext(Context1)
 
 	useEffect(() => {
 		const timer = setTimeout(() => { setFade('end') }, 200)
@@ -102,7 +96,7 @@ function TabContent({ tabVisible }) {
 	}, [tabVisible]) // 화면로드 애니메이션
 
 	return (<div className={"start " + fade}>
-		{[<div>{stock}</div>, <div>리뷰</div>, <div>qna</div>][tabVisible]}
+		{[<div>상세정보</div>, <div>리뷰</div>, <div>qna</div>][tabVisible]}
 	</div>)
 }
 

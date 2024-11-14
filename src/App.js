@@ -1,12 +1,11 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import { Spinner, Container, Nav, Navbar, Row, Col, Button } from 'react-bootstrap';
 import data from './data.js' //data.js임시데이터
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './pages/Detail.js';
+import Cart from './pages/Cart.js';
 import axios from 'axios' //axios 추가
 import './App.css'
-
-export let Context1 = createContext()
 
 function App() {
 
@@ -39,7 +38,7 @@ function App() {
 						<Nav.Link href="/bestSeller">BestSeller</Nav.Link>
 						<Nav.Link href="/new">New</Nav.Link>
 						<Nav.Link href="/steadySeller">SteadySeller</Nav.Link>
-						<Nav.Link onClick={() => (navigate(`/react_shop/detail/0`))}>detail</Nav.Link>
+						<Nav.Link href="/react_shop/cart">Cart</Nav.Link>
 					</Nav>
 				</Container>
 			</Navbar>
@@ -70,7 +69,8 @@ function App() {
 						</div>
 					</>
 				} />
-				<Route path="/react_shop/detail/:id" element={<Context1.Provider value={{ stock }}><Detail books={books} /></Context1.Provider>} /> {/**url 파라미터 */}
+				<Route path="/react_shop/detail/:id" element={<Detail books={books} />} />  {/**url 파라미터 */}
+				<Route path="/react_shop/cart" element={<Cart />} />
 				<Route path="/about" element={<About />}>
 					<Route path="member" element={<div>멤버</div>} />
 					<Route path="location" element={<About />} />
