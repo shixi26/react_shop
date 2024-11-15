@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import { InputGroup, Form, Nav } from 'react-bootstrap';
+import { addItem } from "../store";
+import { useDispatch } from "react-redux";
 
 function Detail(props) {
 
@@ -10,6 +12,7 @@ function Detail(props) {
 	const [inputAlert, setInputAlert] = useState(false) //알림div 상태
 	const [tabVisible, setTabVisible] = useState(0) //탭 상태 0번째,1번째,2번째
 	const [viewEffect, setViewEffect] = useState('') //화면로드시 상태
+	let dispatch = useDispatch() //redux state변경요청
 
 	//[id]번째 상품이아닌 상품id가 {id}인거 보여주기
 	const goods = props.books.find(function (x) {
@@ -49,7 +52,9 @@ function Detail(props) {
 							<h4 className="pt-5">{goods.title}</h4>
 							<p>{goods.content}</p>
 							<p>{goods.price} 원</p>
-							<button className="btn btn-danger">주문하기</button>
+							<button className="btn btn-danger" onClick={() => {
+								dispatch(addItem({ id: goods.id, name: goods.title, count: 1 }))
+							}}>주문하기</button>
 							{inputAlert && (
 								<div className="alert alert-warning">
 									No 숫자

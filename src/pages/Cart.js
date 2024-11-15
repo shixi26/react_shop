@@ -1,6 +1,6 @@
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart } from "../store";
+import { addCount } from "../store";
 
 function Cart() {
 
@@ -26,9 +26,9 @@ function Cart() {
 							<td>{cart.id}</td>
 							<td>{cart.name}</td>
 							<td>{cart.count}</td>
-							<td><button onClick={() => {
-								dispatch(addCart({ id: cart.id }))
-							}}>+</button></td>
+							<td><Button onClick={() => {
+								dispatch(addCount(cart.id))
+							}}>+</Button></td>
 						</tr>
 					))}
 				</tbody>

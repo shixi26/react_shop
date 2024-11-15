@@ -1,15 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-
-let user = createSlice({
-	name: 'user',
-	initialState: 'kim',
-	reducers: {
-		changeName(state) {
-			return 'john' + state
-		}
-	}
-})
-export let { changeName } = user.actions
+import user from './store/userSlice.js' //slice파일 분리
 
 let carts = createSlice({
 	name: 'carts',
@@ -18,17 +8,21 @@ let carts = createSlice({
 		{ id: 2, name: 'Grey Yordan', count: 1 }
 	],
 	reducers: {
-		addCart(state, action) {
-			const { id } = action.payload;
-			return state.map(item => (
-				item.id === id
-					? { ...item, count: item.count + 1 }
-					: item
-			))
+		addCount(state, action) {
+			let num = state.findIndex((a) => a.id === action.payload)
+			state[num].count++
+		},
+		addItem(state, action) {
+			let num = state.findIndex((a) => a.id === action.payload.id)
+			if (num < 0) {
+				state.push(action.payload)
+			} else {
+				state[num].count++
+			}
 		}
 	}
 })
-export let { addCart } = carts.actions
+export let { addCount, addItem } = carts.actions
 
 
 export default configureStore({
