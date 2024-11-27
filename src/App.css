@@ -56,3 +56,18 @@
   transition: opacity 1s ease-in-out;
 }
 /*컴포넌트전환 애니메이션 끝*/
+
+/* 버튼 시작*/
+.btn-area-right {
+  margin-top: 10px;
+  font-size: 0;
+  text-align: right;
+}
+
+.btn-area-center {
+  margin-top: 10px;
+  font-size: 0;
+  text-align: center;
+}
+
+/* 버튼 끝*/

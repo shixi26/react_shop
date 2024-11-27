@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Spinner, Container, Nav, Navbar, Row, Col, Button } from 'react-bootstrap';
 import data from './data.js' //data.js임시데이터
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -12,7 +12,15 @@ function App() {
 	const [books, setBooks] = useState(data) // 상품 state
 	const [clickCnt, setClickCnt] = useState(0) // 더보기 버튼 클릭 수 state
 	const [spin, setSpin] = useState(false) //로딩중ui state
-	const navigator = useNavigate()
+	const navigator = useNavigate() //navigator 훅
+
+	useEffect(() => {
+		//최근본상품
+		localStorage.setItem('obj', JSON.stringify([{ id: '0', title: "White and Black" }, { id: '2', title: "Red Knit" }]));
+		var a = localStorage.getItem('obj')
+		var b = JSON.parse(a)
+		console.log(b)
+	}, [])
 
 	//가나다순 정렬
 	const handleSort = () => {
@@ -31,7 +39,7 @@ function App() {
 				<Container>
 					<a href="/react_shop"><img src={process.env.PUBLIC_URL + "/img/hao_logo1.png"} style={{ height: '70px', backgroundSize: 'cover' }} alt="logo" /></a>
 					<Nav className="me-auto">
-						<Nav.Link href="/react_shop">Home</Nav.Link>
+						<Nav.Link onClick={() => (navigator('react_shop'))}>Home</Nav.Link>
 						<Nav.Link onClick={() => (navigator('react_shop/bestSeller'))}>BestSeller</Nav.Link>
 						<Nav.Link onClick={() => (navigator('react_shop/new'))}>New</Nav.Link>
 						<Nav.Link onClick={() => (navigator('react_shop/steadySeller'))}>SteadySeller</Nav.Link>
@@ -45,30 +53,34 @@ function App() {
 					<>
 						<div className="main-bg"></div>
 						<div>
-							<Button variant="primary" onClick={handleSort}>정렬</Button>
+							<div className="btn-area-right">
+								<Button variant="primary" onClick={handleSort}>정렬</Button>
+							</div>
 							<Content books={books} />
-
-							<Button variant="primary"
-								onClick={() => {
-									setSpin(true) //로딩ui show
-									setClickCnt(clickCnt + 1)
-									axios.get(`https://codingapple1.github.io/shop/data${clickCnt + 2}.json`)
-										.then((result) => {
-											const res = result.data
-											const copy = [...books, ...res]
-											setBooks(copy)
-											setSpin(false) //로딩ui 숨기기
-										})
-										.catch(() => {
-											console.log('실패')
-											setSpin(false) //로딩ui 숨기기
-										})
-								}}
-								disabled={clickCnt >= 2 || spin}>
-								{spin ? (
-									<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-								) : ('더보기')}
-							</Button>
+							<div className='btn-area-center'>
+								<Button variant="link"
+									id={"more_" + 0 + clickCnt}
+									onClick={() => {
+										setSpin(true) //로딩ui show
+										setClickCnt(clickCnt + 1)
+										axios.get(`https://codingapple1.github.io/shop/data${clickCnt + 2}.json`)
+											.then((result) => {
+												const res = result.data
+												const copy = [...books, ...res]
+												setBooks(copy)
+												setSpin(false) //로딩ui 숨기기
+											})
+											.catch(() => {
+												console.log('실패')
+												setSpin(false) //로딩ui 숨기기
+											})
+									}}
+									disabled={clickCnt >= 2 || spin}>
+									{spin ? (
+										<Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+									) : ('더보기')}
+								</Button>
+							</div>
 						</div>
 					</>
 				} />
