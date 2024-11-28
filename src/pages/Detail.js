@@ -24,9 +24,12 @@ function Detail(props) {
 		const arr = JSON.parse(localStorage.getItem('obj')) || []
 		let num = arr.findIndex((a) => a.id === id)
 		if (num < 0) { //중복없을시추가
-			arr.push({ id: id })
-			localStorage.setItem('obj', JSON.stringify(arr))
+			arr.unshift({ id: id })
+		} else {
+			arr.splice(num, 1)
+			arr.unshift({ id: id })
 		}
+		localStorage.setItem('obj', JSON.stringify(arr))
 		console.log(arr)
 		// localStorage.removeItem('obj')
 

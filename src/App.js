@@ -6,6 +6,7 @@ import Detail from './pages/Detail.js';
 import Cart from './pages/Cart.js';
 import axios from 'axios' //axios 추가
 import './App.css'
+import FloatingBanner from './FloatingBanner.js';
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
 								</Button>
 							</div>
 						</div>
+						<FloatingBanner />
 					</>
 				} />
 				<Route path="/react_shop/detail/:id" element={<Detail books={books} />} />  {/**url 파라미터 */}
