@@ -30,7 +30,7 @@ function Detail(props) {
 			arr.unshift({ id: id })
 		}
 		localStorage.setItem('obj', JSON.stringify(arr))
-		console.log(arr)
+		//console.log(arr)
 		// localStorage.removeItem('obj')
 
 		//타이머

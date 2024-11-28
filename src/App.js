@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Spinner, Container, Nav, Navbar, Row, Col, Button } from 'react-bootstrap';
 import data from './data.js' //data.js임시데이터
 import { Routes, Route, useNavigate } from 'react-router-dom';
