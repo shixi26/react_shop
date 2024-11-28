@@ -14,14 +14,6 @@ function App() {
 	const [spin, setSpin] = useState(false) //로딩중ui state
 	const navigator = useNavigate() //navigator 훅
 
-	useEffect(() => {
-		//최근본상품
-		localStorage.setItem('obj', JSON.stringify([{ id: '0', title: "White and Black" }, { id: '2', title: "Red Knit" }]));
-		var a = localStorage.getItem('obj')
-		var b = JSON.parse(a)
-		console.log(b)
-	}, [])
-
 	//가나다순 정렬
 	const handleSort = () => {
 		let copy = [...books]

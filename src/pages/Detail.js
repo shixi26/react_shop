@@ -20,6 +20,16 @@ function Detail(props) {
 	})
 
 	useEffect(() => {//화면로드시
+		//최근본상품
+		const arr = JSON.parse(localStorage.getItem('obj')) || []
+		let num = arr.findIndex((a) => a.id === id)
+		if (num < 0) { //중복없을시추가
+			arr.push({ id: id })
+			localStorage.setItem('obj', JSON.stringify(arr))
+		}
+		console.log(arr)
+		// localStorage.removeItem('obj')
+
 		//타이머
 		const timer = setTimeout(() => { setAlertVisible(false) }, 2000)
 		//애니메이션
