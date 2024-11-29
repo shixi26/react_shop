@@ -21,7 +21,7 @@ function FloatingBanner() {
 		<div
 			className="floating-banner"
 			style={{
-				top: `${offset + 350}px`, // 기본 위치에서 스크롤 만큼 이동
+				top: `${offset + 450}px`, // 기본 위치에서 스크롤 만큼 이동
 			}}
 		>
 			<div className="banner-content">

@@ -6,7 +6,8 @@ import Detail from './pages/Detail.js';
 import Cart from './pages/Cart.js';
 import axios from 'axios' //axios 추가
 import './App.css'
-import FloatingBanner from './FloatingBanner.js';
+import FloatingBanner from './FloatingBanner.js'; //최근본상품배너
+import { useQuery } from 'react-query';
 
 function App() {
 
@@ -26,6 +27,16 @@ function App() {
 		setBooks(copy)
 	}
 
+	//react-query
+	let result = useQuery('getUserNm',
+		() => axios.get('https://codingapple1.github.io/userdata.json')
+			.then((a) => {
+				console.log("요청됨")
+				return a.data
+			}),
+		{ staleTime: 2000 } //refetch시간 지정
+	)
+
 	return (
 		<div>
 			<Navbar bg="light" data-bs-theme="light">
@@ -38,6 +49,7 @@ function App() {
 						<Nav.Link onClick={() => (navigator('react_shop/steadySeller'))}>SteadySeller</Nav.Link>
 						<Nav.Link onClick={() => (navigator('react_shop/cart'))}>Cart</Nav.Link>
 					</Nav>
+					<Nav className='ms-auto'>{result.isLoading ? "로딩중입니다" : "환영합니다. " + result.data.name + " 님"}</Nav>
 				</Container>
 			</Navbar>
 
